@@ -8,37 +8,40 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//צריך להגיד לשרת איך מתחברים למסדי הנתונים
 
 @Component
 public class DbUtils {
-    private Connection connection;
+    private Connection connection;//יוצרים חיבור (קונקשן) בעצם ככה הקליינט מזדהה ואומר הנה היוזר שלי
 
 
-    @PostConstruct
+    @PostConstruct//מתודה שתרוץ מיד על העלאת האפליקציה ופה ניצור את הקונקשן
     public void init () {
         String host = "localhost";
-        String username = "root";
-        String password = "1234";
+        String username = "root";//פה אנחנו נכתוב את המידע שכתבנו כשיצרנו את הדטהבייס
+        String password = "123";//וזאת הסיסמה, (אני יצרתי 123 אבל אוה אם את קוראת תעשי 1234 כמו שי שלא יהיו לך שגיאות
 
+        //שי בדק דרך הגוגל איזה סטרינג צריך לשים כדי לחבר לדטהבייס ופשוט שינה את הדברים שלו
         String url = "jdbc:mysql://localhost:3306/ash_2025?useSSL=false&serverTimezone=UTC";
         try {
-            this.connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connection established!");
+            this.connection = DriverManager.getConnection(url, username, password);//עוטפים את זה בטריי קאץ', וכך אנחנו מאתחלים את השדה של המחלקה
+            System.out.println("Connection established!");//אם זה מוצג - זה אומר שהצלחתי ליצור קשר עם הדטה בייס
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void createUserOnDb (User user) {
+    public void createUserOnDb (User user) {//מקבלת מבחוץ יוזר ותשמור רשומה בדטה בייס
+        //בתמונה 3+4 יש הסבר על איך הרצתי את השאילתא, ככה בדקתי שהיא בכלל עובדת
         try {
-            PreparedStatement statement = this.connection.prepareStatement(
+            PreparedStatement statement = this.connection.prepareStatement(//יוצר אובייקט שנקרא פריפרד סטייטמנט (שאילתא). כדי שנוכל אחר כך לשאול את הדטה בייס שאלה והוא יוכל להחזיר תשובה
                     "INSERT INTO users (first_name, last_name, phone, username)" +
-                    "VALUE (?, ?, ?, ?)");
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
+                    "VALUE (?, ?, ?, ?)");//הסימני שאלה זה פלייסהולדרים
+            statement.setString(1, user.getFirstName());//ככה ממלאים אותם, במיקום ה1 בתוך הסוגריים יהיה שם פרטי וכך הלאה..
+            statement.setString(2, user.getLastName());//מיקום 2 שם משפחה..
             statement.setString(3, user.getPhone());
             statement.setString(4, user.getUsername());
-            statement.executeUpdate();
+            statement.executeUpdate();//
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
