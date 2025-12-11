@@ -44,7 +44,7 @@ public class GeneralController {//קונטרולר->מחלקה שמאזינה ל
     public BasicResponse addUser (String first, String last, String phone) {
         if (first != null && !first.isEmpty()) {//רק אם יש בפנים איזשהו תוכן, ואנחנו נוסיף אותה בכל מקרה בצד שרת כי אני לא מכיר את הקליינט, אני לא יודעת איזה הגנות הם יעשו/או לא יעשו ולכן אני אעדיף תמיד לעשות הגנה כפולה (לא נסמוך על הקליינט)
             if (last != null && !last.isEmpty()) {
-                User user = new User(first, last, phone, "");
+                User user = new User(first, last, phone, "");//הוא עשה פה מחרוזת ריקה כדי שלא תהיה שגיאה (אנחנו לא הגדרנו בכלל שם משתמש)
                  dbUtils.createUserOnDb(user);//פה הוא פונה למחלקה הזאת ויוצר את היוזר הזה בדטה בייס
                 return new BasicResponse(true, null);
             } else {

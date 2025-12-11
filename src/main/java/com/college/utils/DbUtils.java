@@ -49,21 +49,21 @@ public class DbUtils {
     }
 
     public List<User> getAllUsers () {
-        List<User> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();//רשימה ריקה
         try {
             PreparedStatement preparedStatement =
                     this.connection.prepareStatement("SELECT first_name, last_name, phone, username FROM users");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            ResultSet resultSet = preparedStatement.executeQuery();//מאחורי הקלעים זה ממומש כסוג של רשימה מקושרת
+            while (resultSet.next()) {//כל פעם מביאה לי רשומה אחת, שורה אחת מתוך הדטהבייס
                 String firstName = resultSet.getString(1);
                 String lastName = resultSet.getString(2);
                 String phone = resultSet.getString(3);
                 String username = resultSet.getString(4);
-                User user = new User(firstName, lastName, phone, username);
-                users.add(user);
+                User user = new User(firstName, lastName, phone, username);//כל רשומה
+                users.add(user);//מוסיפים לתוך הרשימה
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException e) {//אין פה אקסקיוט אפדייט כי אני לא מעדכנת כלום.. מה שכן אני מביאה שאילתא
             throw new RuntimeException(e);
         }
 
