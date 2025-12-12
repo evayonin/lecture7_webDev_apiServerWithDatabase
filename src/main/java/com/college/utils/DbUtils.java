@@ -62,7 +62,11 @@ public class DbUtils {
                 String firstName = resultSet.getString(1);
                 String lastName = resultSet.getString(2);
                 String phone = resultSet.getString(3);
-                String username = resultSet.getString(4); // שי הגדיר את זה כשם פרטי בשיעור כי לא חייבנו שיכניסו יוזרניים ושמנו ״״ ולכן שומר מחרוזת ריקה שזה לא חוקי בטבלאות - ???
+                String username = resultSet.getString(4); // שי הגדיר את זה כשם פרטי בשיעור כי לא חייבנו שיכניסו יוזרניים ושמנו ״״ ולכן שומר מחרוזת ריקה שזה לא חוקי בטבלאות - והרי שי הגדיר אצלו שעמודת היוזרניים היא unique key אז לא חוקי שיהיה ריק - הראה לו שגיאה של יוניק קי.
+                // תזכורת: ככה שלחנו לשרת בקשה מצד לקוח:
+                //  axios.get("http://localhost:8989/create-user?first=" + firstName + "" +
+                //                                "&last=" + lastName + "&phone=1234567")
+                // אין פה יוזרניים...
                 User user = new User(firstName, lastName, phone, username);//כל רשומה יוצרים לה יוזר
                 users.add(user);//מוסיפים לתוך הרשימה
 
