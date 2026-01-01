@@ -42,7 +42,7 @@ public class DbUtils {
             statement.setString(1, user.getFirstName());//ככה ממלאים אותם, במיקום ה1 בפלייסהולדרים בתוך הסוגריים יהיה שם פרטי וכך הלאה..
             statement.setString(2, user.getLastName());//מיקום 2 שם משפחה..
             statement.setString(3, user.getPhone());
-            statement.setString(4, user.getUsername()); // כאן שי שינה ל getFirstName כדי שיעבוד (בגלל הבעיה שמנוסחת בשורה 67 כאן)
+            statement.setString(4, user.getUsername()); // כאן שי שינה ל getFirstName במקום getUsername() כדי שיעבוד (בגלל הבעיה שמנוסחת בשורה 67 כאן)
             statement.executeUpdate();//
         } catch (SQLException e) {
             throw new RuntimeException(e);
